@@ -1,0 +1,20 @@
+server:
+  port: 7777
+spring:
+  datasource:
+    username: postgres
+    password: 123
+    url: jdbc:postgresql://localhost:5432/eufloria_db
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+app:
+  token:
+    expireDays: 3
+    secretKey: '03d2430e18744da8db2b8dbd64a64977be5c1a7f06d52197c9b8113a3b552c69'
+  admin:
+    username: iqminus1
+    password: 123
+    email: iqminus7@gmail.com
