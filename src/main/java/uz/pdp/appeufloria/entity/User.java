@@ -3,6 +3,8 @@ package uz.pdp.appeufloria.entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import lombok.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,6 +20,8 @@ import java.util.Collection;
 @Getter
 @ToString
 @Entity(name = "users")
+@SQLRestriction("deleted = false")
+@SQLDelete(sql="update users set deleted = true where id = ?")
 public class User extends AbsIntEntity implements UserDetails, Serializable {
 
     private String username;

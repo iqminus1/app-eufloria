@@ -60,8 +60,12 @@ public class DataLoader implements CommandLineRunner {
 
     private void checkAdmin() {
         Optional<User> optionalUser = userRepository.findByUsername(username);
-        if (optionalUser.isPresent())
-            return;
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            user.getRole().setPermissions(getPermissions());
+            roleRepository.save(user.getRole());
+            userRepository.save(user);
+        }
         Role role = getRole();
         User user = new User(username, passwordEncoder.encode(password), email, true, role);
         userRepository.save(user);
