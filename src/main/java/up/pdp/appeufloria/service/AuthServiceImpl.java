@@ -70,13 +70,15 @@ public class AuthServiceImpl implements AuthService {
                 commonUtils.getUserRole()
         );
         userRepository.save(user);
-        mailService.sendVerify(signIn.getEmail());
+        mailService.sendVerify(signIn.getEmail(),signIn.getUsername());
         return ApiResultDTO.success("Verify email");
     }
 
     @Override
-    public ApiResultDTO<?> verifyEmail(String email, String code) {
-        Code codeEntity = codeRepository.getByEmail(email);
+    public ApiResultDTO<?> verifyEmail(String username, String code) {
+        User user = userRepository.getByUsername(username);
+
+        Code codeEntity = codeRepository.getByEmail(user.getEmail());
 
         if (!codeEntity.getCodeString().equals(code)) {
             if (codeEntity.getAttempt() == 1) {
@@ -90,6 +92,10 @@ public class AuthServiceImpl implements AuthService {
 
         codeRepository.delete(codeEntity);
 
+        user.setEnable(true);
+        userRepository.save(user);
+
         return ApiResultDTO.success("Ok");
     }
+
 }

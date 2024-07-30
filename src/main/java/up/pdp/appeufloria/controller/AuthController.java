@@ -26,7 +26,7 @@ public class AuthController {
     }
 
     @GetMapping("/verify-email")
-    public ResponseEntity<?> verifyEmail(@RequestParam String email, @RequestParam String code) {
-        return ResponseEntity.status(200).body(authService.verifyEmail(email, code));
+    public ResponseEntity<?> verifyEmail(@RequestParam String username, @RequestParam String code) {
+        return ResponseEntity.status(200).body(authService.verifyEmail(username, code));
     }
 }
