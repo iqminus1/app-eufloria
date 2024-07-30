@@ -1,5 +1,6 @@
 server:
   port: 7777
+
 spring:
   datasource:
     username: postgres
@@ -13,7 +14,6 @@ spring:
     jdbc:
       initialize-schema: always
 
-
 app:
   token:
     expireDays: 3
@@ -23,6 +23,6 @@ app:
     password: 123
     email: iqminus7@gmail.com
   url:
-    verification: http://localhost/api/v1/auth/verification
+    verification: http://localhost:${server.port}/app/v1/auth/verify-email
   code:
     attempt: 5
