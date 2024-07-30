@@ -28,13 +28,13 @@ public class MailServiceImpl implements MailService {
 
     @Async
     @Override
-    public void sendVerify(String email) {
+    public void sendVerify(String email, String username) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(email);
         message.setSubject("Mega -<=(-><-)=>- News");
         String codeString = generatePassword();
         Code code = new Code(email, codeString, attempt);
-        message.setText("Verification email click the link -> : " + verificationUrl + "?email=%s&code=%s".formatted(email, codeString));
+        message.setText("Verification email click the link -> : " + verificationUrl + "?username=%s&code=%s".formatted(username, codeString));
         mailSender.send(message);
         codeRepository.save(code);
     }

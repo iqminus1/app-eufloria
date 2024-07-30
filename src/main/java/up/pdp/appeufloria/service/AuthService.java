@@ -10,5 +10,5 @@ public interface AuthService extends UserDetailsService {
 
     ApiResultDTO<?> signUp(SignUpDTO signIn);
 
-    ApiResultDTO<?> verifyEmail(String email, String code);
+    ApiResultDTO<?> verifyEmail(String username, String code);
 }
