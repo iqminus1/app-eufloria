@@ -9,6 +9,9 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+  batch:
+    jdbc:
+      initialize-schema: always
 
 app:
   token:
@@ -18,3 +21,9 @@ app:
     username: iqminus1
     password: 123
     email: iqminus7@gmail.com
+
+  url:
+    verification: http://localhost/api/v1/auth/verification
+
+  code:
+    attempt: 5

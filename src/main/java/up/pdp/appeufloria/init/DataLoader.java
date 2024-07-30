@@ -13,6 +13,7 @@ import up.pdp.appeufloria.enums.RoleType;
 import up.pdp.appeufloria.repository.PermissionRepository;
 import up.pdp.appeufloria.repository.RoleRepository;
 import up.pdp.appeufloria.repository.UserRepository;
+import up.pdp.appeufloria.utils.AppConstants;
 
 import java.util.List;
 import java.util.Optional;
@@ -36,6 +37,25 @@ public class DataLoader implements CommandLineRunner {
     @Override
     public void run(String... args) {
         checkAdmin();
+
+        checkUserRole();
+    }
+
+    private void checkUserRole() {
+        if (roleRepository.findByName(AppConstants.ROLE_USER_STRING).isPresent()) {
+            return;
+        }
+        Permission userPerm = permissionRepository.findAll()
+                .stream()
+                .filter(e -> e.getPermission().equals(PermissionEnum.USER_PERMISSION))
+                .findFirst()
+                .orElseGet(() -> {
+                    Permission permission = new Permission(PermissionEnum.USER_PERMISSION.name(), PermissionEnum.USER_PERMISSION);
+                    permissionRepository.save(permission);
+                    return permission;
+                });
+        Role role = new Role(AppConstants.ROLE_USER_STRING, RoleType.USER, List.of(userPerm));
+        roleRepository.save(role);
     }
 
     private void checkAdmin() {
@@ -64,7 +84,7 @@ public class DataLoader implements CommandLineRunner {
             return permissions;
         }
 
-        List<String> list = permissions.stream().map(p -> p.getName()).toList();
+        List<String> list = permissions.stream().map(Permission::getName).toList();
 
         for (PermissionEnum value : PermissionEnum.values()) {
             if (list.contains(value)) {
