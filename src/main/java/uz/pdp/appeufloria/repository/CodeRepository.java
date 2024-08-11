@@ -14,9 +14,9 @@ import java.util.Optional;
 public interface CodeRepository extends JpaRepository<Code, Integer> {
     Optional<Code> findByEmail(String email);
 
-    @Cacheable(value = "codeEntity",key = "#email")
-    default Code getByEmail(String email){
-        return findByEmail(email).orElseThrow(()->new NotFoundException("email not found for verify code"));
+    @Cacheable(value = "codeEntity", key = "#email")
+    default Code getByEmail(String email) {
+        return findByEmail(email).orElseThrow(() -> new NotFoundException("email not found for verify code"));
     }
 
     @CachePut(value = "codeEntity", key = "#code.email")

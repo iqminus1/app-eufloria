@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ApiResultDTO<T> {
+public class ApiResultDTO<T> implements Serializable {
     private boolean success;
     private T data;
     private String errorMessage;

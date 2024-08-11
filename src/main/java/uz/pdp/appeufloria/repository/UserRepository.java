@@ -20,10 +20,10 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     }
 
     @Override
-    @CachePut(value = "userEntity",key = "#result.username")
+    @CachePut(value = "userEntity", key = "#result.username")
     User save(User user);
 
     @Override
-    @CacheEvict(value = "userEntity",key = "#user.username")
+    @CacheEvict(value = "userEntity", key = "#user.username")
     void delete(User user);
 }

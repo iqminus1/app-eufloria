@@ -20,10 +20,10 @@ public interface RoleRepository extends JpaRepository<Role, Integer> {
     }
 
     @Override
-    @CachePut(value = "roleEntity",key = "#result.name")
+    @CachePut(value = "roleEntity", key = "#result.name")
     Role save(Role role);
 
     @Override
-    @CacheEvict(value = "roleEntity",key = "#role.name")
+    @CacheEvict(value = "roleEntity", key = "#role.name")
     void delete(Role role);
 }

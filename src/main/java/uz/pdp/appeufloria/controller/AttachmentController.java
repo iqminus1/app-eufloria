@@ -15,6 +15,7 @@ import uz.pdp.appeufloria.utils.AppConstants;
 public class AttachmentController {
     private final AttachmentService attachmentService;
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/read/{id}")
     public void read(@PathVariable Integer id, HttpServletResponse resp) {
         attachmentService.read(resp, id);
