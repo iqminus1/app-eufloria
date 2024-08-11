@@ -1,6 +1,7 @@
 package uz.pdp.appeufloria.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.ManyToMany;
 import lombok.*;
 import org.hibernate.annotations.SQLDelete;
@@ -24,7 +25,7 @@ public class Role extends AbsIntEntity implements Serializable {
 
     private RoleType type;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @ToString.Exclude
     private List<Permission> permissions;
 }

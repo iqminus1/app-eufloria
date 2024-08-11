@@ -2,6 +2,7 @@ package uz.pdp.appeufloria.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uz.pdp.appeufloria.payload.SignInDTO;
@@ -28,5 +29,10 @@ public class AuthController {
     @GetMapping("/verify-email")
     public ResponseEntity<?> verifyEmail(@RequestParam String username, @RequestParam String code) {
         return ResponseEntity.status(200).body(authService.verifyEmail(username, code));
+    }
+    @GetMapping("/flush-usernames-token")
+    @CacheEvict(value = "tokenGenerate",key = "#username")
+    public ResponseEntity<?> flush(@RequestParam String username){
+        return ResponseEntity.status(200).body("Ok");
     }
 }

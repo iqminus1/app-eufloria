@@ -76,6 +76,7 @@ public class AttachmentServiceImpl implements AttachmentService {
                     attachment.getContentType(),
                     attachment.getSize()
             );
+            copyAttachment.setDeleted(true);
             attachmentRepository.save(copyAttachment);
 
         }

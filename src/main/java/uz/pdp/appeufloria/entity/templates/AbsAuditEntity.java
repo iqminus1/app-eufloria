@@ -6,9 +6,11 @@ import lombok.Getter;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.LastModifiedBy;
 
+import java.io.Serializable;
+
 @Getter
 @MappedSuperclass
-public abstract class AbsAuditEntity extends AbsDateEntity {
+public abstract class AbsAuditEntity extends AbsDateEntity implements Serializable {
     @CreatedBy
     @Column(updatable = false)
     private Integer createBy;

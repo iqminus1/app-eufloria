@@ -15,7 +15,7 @@ import java.io.Serializable;
 @ToString
 @Entity
 @SQLRestriction("deleted = false")
-@SQLDelete(sql="update users set deleted = true where id = ?")
+@SQLDelete(sql="update attachment set deleted = true where id = ?")
 public class Attachment extends AbsIntEntity implements Serializable {
     private String name;
     private String originalName;

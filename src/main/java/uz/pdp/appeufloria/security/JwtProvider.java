@@ -20,6 +20,7 @@ public class JwtProvider {
     @Value("${app.token.secretKey}")
     private String secretKeyString;
 
+    @Cacheable(value = "tokenGenerate",key = "#username")
     public String generateToken(String username) {
         Date expire = new Date(System.currentTimeMillis() + expireDays * 24 * 60 * 60 * 1000);
         return Jwts.builder()
@@ -30,7 +31,7 @@ public class JwtProvider {
                 .compact();
     }
 
-    @Cacheable(value = "TokenSubject",key = "#token")
+    @Cacheable(value = "tokenSubject",key = "#token")
     public String getSubject(String token) {
         return ((Claims) Jwts.parser()
                 .verifyWith(getKey())

@@ -21,7 +21,7 @@ app:
   admin:
     username: iqminus1
     password: 123
-    email: iqminus7@gmail.com
+    email: wwxeww1wwxeww@gmail.com
   url:
     verification: http://localhost:${server.port}/app/v1/auth/verify-email
   code:

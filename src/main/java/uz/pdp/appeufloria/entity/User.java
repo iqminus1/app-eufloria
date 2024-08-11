@@ -1,6 +1,7 @@
 package uz.pdp.appeufloria.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.ManyToOne;
 import lombok.*;
 import org.hibernate.annotations.SQLDelete;
@@ -32,7 +33,7 @@ public class User extends AbsIntEntity implements UserDetails, Serializable {
 
     private boolean enable;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Role role;
 
     @Override

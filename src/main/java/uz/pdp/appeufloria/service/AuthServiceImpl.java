@@ -42,14 +42,14 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public ApiResultDTO<?> signIn(SignInDTO signUp) {
+    public ApiResultDTO<?> signIn(SignInDTO signIn) {
         try {
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                    signUp.getUsername(),
-                    signUp.getPassword()
+                    signIn.getUsername(),
+                    signIn.getPassword()
             );
             authenticationProvider.authenticate(authentication);
-            String token = jwtProvider.generateToken(signUp.getUsername());
+            String token = jwtProvider.generateToken(signIn.getUsername());
             return ApiResultDTO.success(new TokenDTO(token));
         } catch (AuthenticationException e) {
             throw new RuntimeException(e);
@@ -58,19 +58,19 @@ public class AuthServiceImpl implements AuthService {
 
     @SneakyThrows
     @Override
-    public ApiResultDTO<?> signUp(SignUpDTO signIn) {
-        if (!Objects.equals(signIn.getPassword(), signIn.getAcceptedPassword())) {
+    public ApiResultDTO<?> signUp(SignUpDTO signUp) {
+        if (!Objects.equals(signUp.getPassword(), signUp.getAcceptedPassword())) {
             throw new BadRequestException();
         }
         User user = new User(
-                signIn.getUsername(),
-                passwordEncoder.encode(signIn.getPassword()),
-                signIn.getEmail(),
+                signUp.getUsername(),
+                passwordEncoder.encode(signUp.getPassword()),
+                signUp.getEmail(),
                 false,
                 commonUtils.getUserRole()
         );
         userRepository.save(user);
-        mailService.sendVerify(signIn.getEmail(),signIn.getUsername());
+        mailService.sendVerify(signUp.getEmail(),signUp.getUsername());
         return ApiResultDTO.success("Verify email");
     }
 
