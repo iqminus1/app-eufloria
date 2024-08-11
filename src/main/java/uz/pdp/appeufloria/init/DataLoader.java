@@ -47,10 +47,10 @@ public class DataLoader implements CommandLineRunner {
         }
         Permission userPerm = permissionRepository.findAll()
                 .stream()
-                .filter(e -> e.getPermission().equals(PermissionEnum.USER_PERMISSION))
+                .filter(e -> e.getName().equals(PermissionEnum.USER_PERMISSION.name()))
                 .findFirst()
                 .orElseGet(() -> {
-                    Permission permission = new Permission(PermissionEnum.USER_PERMISSION.name(), PermissionEnum.USER_PERMISSION);
+                    Permission permission = new Permission(PermissionEnum.USER_PERMISSION.name());
                     permissionRepository.save(permission);
                     return permission;
                 });
@@ -65,6 +65,7 @@ public class DataLoader implements CommandLineRunner {
             user.getRole().setPermissions(getPermissions());
             roleRepository.save(user.getRole());
             userRepository.save(user);
+            return;
         }
         Role role = getRole();
         User user = new User(username, passwordEncoder.encode(password), email, true, role);
@@ -91,10 +92,10 @@ public class DataLoader implements CommandLineRunner {
         List<String> list = permissions.stream().map(Permission::getName).toList();
 
         for (PermissionEnum value : PermissionEnum.values()) {
-            if (list.contains(value)) {
+            if (list.contains(value.name())) {
                 continue;
             }
-            Permission permission = new Permission(value.name(), value);
+            Permission permission = new Permission(value.name());
             permissionRepository.save(permission);
             permissions.add(permission);
         }

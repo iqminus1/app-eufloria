@@ -5,7 +5,6 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.*;
 import uz.pdp.appeufloria.entity.templates.AbsIntEntity;
-import uz.pdp.appeufloria.enums.PermissionEnum;
 
 import java.io.Serializable;
 
@@ -17,7 +16,4 @@ import java.io.Serializable;
 @Entity
 public class Permission extends AbsIntEntity implements Serializable {
     private String name;
-
-    @Enumerated(value = EnumType.STRING)
-    private PermissionEnum permission;
 }
