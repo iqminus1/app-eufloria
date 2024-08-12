@@ -6,7 +6,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uz.pdp.appeufloria.payload.SignInDTO;
-import uz.pdp.appeufloria.payload.SignUpDTO;
+import uz.pdp.appeufloria.payload.in.SignUpDTO;
 import uz.pdp.appeufloria.service.AuthService;
 import uz.pdp.appeufloria.utils.AppConstants;
 

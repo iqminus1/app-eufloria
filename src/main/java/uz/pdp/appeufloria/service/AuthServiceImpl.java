@@ -14,7 +14,7 @@ import uz.pdp.appeufloria.entity.Code;
 import uz.pdp.appeufloria.entity.User;
 import uz.pdp.appeufloria.payload.ApiResultDTO;
 import uz.pdp.appeufloria.payload.SignInDTO;
-import uz.pdp.appeufloria.payload.SignUpDTO;
+import uz.pdp.appeufloria.payload.in.SignUpDTO;
 import uz.pdp.appeufloria.payload.TokenDTO;
 import uz.pdp.appeufloria.repository.CodeRepository;
 import uz.pdp.appeufloria.repository.UserRepository;

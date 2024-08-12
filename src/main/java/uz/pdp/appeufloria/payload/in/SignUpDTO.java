@@ -1,4 +1,4 @@
-package uz.pdp.appeufloria.payload;
+package uz.pdp.appeufloria.payload.in;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

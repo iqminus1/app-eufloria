@@ -8,8 +8,14 @@ import org.springframework.stereotype.Repository;
 import uz.pdp.appeufloria.entity.Product;
 import uz.pdp.appeufloria.exceptions.NotFoundException;
 
+import java.util.List;
+
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer> {
+    List<Product> findByCategoryId(Integer categoryId);
+
+    List<Product> findByCategoryIdAndAvailable(Integer categoryId, boolean available);
+
     @Cacheable(value = "productEntity", key = "#id")
     default Product getById(Integer id) {
         return findById(id).orElseThrow(() -> NotFoundException.errorById("Product", id));

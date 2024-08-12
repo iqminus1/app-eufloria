@@ -6,7 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import uz.pdp.appeufloria.payload.CategoryCrudDTO;
+import uz.pdp.appeufloria.payload.ApiResultDTO;
+import uz.pdp.appeufloria.payload.in.CategoryCrudDTO;
 import uz.pdp.appeufloria.service.CategoryService;
 import uz.pdp.appeufloria.utils.AppConstants;
 
@@ -45,7 +46,7 @@ public class CategoryController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable Integer id) {
         categoryService.delete(id);
-        return ResponseEntity.ok("Ok");
+        return ResponseEntity.ok(ApiResultDTO.success("Ok"));
     }
 }
 

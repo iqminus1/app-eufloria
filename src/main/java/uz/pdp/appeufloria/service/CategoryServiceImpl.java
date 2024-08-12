@@ -5,7 +5,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import uz.pdp.appeufloria.entity.Category;
 import uz.pdp.appeufloria.payload.ApiResultDTO;
-import uz.pdp.appeufloria.payload.CategoryCrudDTO;
+import uz.pdp.appeufloria.payload.in.CategoryCrudDTO;
 import uz.pdp.appeufloria.payload.CategoryDTO;
 import uz.pdp.appeufloria.repository.CategoryRepository;
 
@@ -21,20 +21,21 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public ApiResultDTO<?> read(Integer id) {
-        Category category = categoryRepository.getById(id);
-        return ApiResultDTO.success(toDTO(category));
-    }
-
-    @Override
-    @Cacheable(value = "category")
+    @Cacheable(value = "categoryAll")
     public ApiResultDTO<?> readAll() {
         List<CategoryDTO> categories = categoryRepository.findAll().stream().map(this::toDTO).toList();
         return ApiResultDTO.success(categories);
     }
 
     @Override
-    @CacheEvict(value = "category", allEntries = true)
+    public ApiResultDTO<?> read(Integer id) {
+        Category category = categoryRepository.getById(id);
+        return ApiResultDTO.success(toDTO(category));
+    }
+
+
+    @Override
+    @CacheEvict(value = "categoryAll", allEntries = true)
     public ApiResultDTO<?> create(CategoryCrudDTO crudDTO) {
         Category parentCategory = null;
         if (Objects.nonNull(crudDTO.getParentCategoryId())) {
@@ -46,7 +47,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    @CacheEvict(value = "category", allEntries = true)
+    @CacheEvict(value = "categoryAll", allEntries = true)
     public ApiResultDTO<?> update(CategoryCrudDTO crudDTO, Integer id) {
         Category parentCategory = null;
         if (Objects.nonNull(crudDTO.getParentCategoryId())) {
@@ -60,7 +61,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    @CacheEvict(value = "category", allEntries = true)
+    @CacheEvict(value = "categoryAll", allEntries = true)
     public void delete(Integer id) {
         Category category = categoryRepository.getById(id);
         categoryRepository.delete(category);

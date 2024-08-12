@@ -5,6 +5,8 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import lombok.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 import uz.pdp.appeufloria.entity.templates.AbsIntEntity;
 
 import java.io.Serializable;
@@ -16,6 +18,8 @@ import java.util.List;
 @Getter
 @ToString
 @Entity
+@SQLRestriction("deleted = false")
+@SQLDelete(sql = "update product set deleted = true where id = ?")
 public class Product extends AbsIntEntity implements Serializable {
     @ManyToOne
     private Category category;
