@@ -6,13 +6,13 @@ import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.LastModifiedBy;
-import uz.pdp.appeufloria.config.AuditingConfig;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.io.Serializable;
 
 @Getter
 @MappedSuperclass
-@EntityListeners(AuditingConfig.class)
+@EntityListeners(AuditingEntityListener.class)
 public abstract class AbsAuditEntity extends AbsDateEntity implements Serializable {
     @CreatedBy
     @Column(updatable = false)
