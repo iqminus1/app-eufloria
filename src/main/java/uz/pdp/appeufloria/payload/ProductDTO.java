@@ -4,12 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class ProductDTO {
+public class ProductDTO implements Serializable {
     private Integer id;
 
     private Integer categoryId;
@@ -20,6 +21,6 @@ public class ProductDTO {
 
     private boolean available;
 
-    private List<Integer> attachments;
+    private List<Integer> attachmentIds;
 
 }

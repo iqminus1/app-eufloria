@@ -34,7 +34,7 @@ public class ProductServiceImpl implements ProductService {
     @Cacheable(value = "productByCategoryId")
     @Override
     public ApiResultDTO<?> getAllByCategoryId(Integer categoryId) {
-        List<ProductDTO> products = productRepository.findByCategoryId(categoryId).stream()
+        List<ProductDTO> products = productRepository.findAllByCategoryId(categoryId).stream()
                 .map(this::toDTO)
                 .toList();
         return ApiResultDTO.success(products);
@@ -43,7 +43,7 @@ public class ProductServiceImpl implements ProductService {
     @Cacheable(value = "productByCategoryIdAndAvailable")
     @Override
     public ApiResultDTO<?> getAllByCategoryIdAndAvailable(Integer categoryId, boolean available) {
-        List<ProductDTO> products = productRepository.findByCategoryIdAndAvailable(categoryId, available).stream()
+        List<ProductDTO> products = productRepository.findAllByCategoryIdAndAvailable(categoryId, available).stream()
                 .map(this::toDTO)
                 .toList();
         return ApiResultDTO.success(products);
@@ -52,10 +52,10 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ApiResultDTO<?> read(Integer id) {
-        return ApiResultDTO.success(productRepository.getById(id));
+        return ApiResultDTO.success(toDTO(productRepository.getById(id)));
     }
 
-    @CacheEvict(value = {"productByCategoryId", "productByCategoryIdAndAvailable"}, allEntries = true)
+    @CacheEvict(value = {"productAll","productByCategoryId", "productByCategoryIdAndAvailable"}, allEntries = true)
     @Override
     public ApiResultDTO<?> create(ProductCrudDTO crudDTO) {
         Product product = updateEntity(new Product(), crudDTO);
@@ -66,17 +66,17 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
-    @CacheEvict(value = {"productByCategoryId", "productByCategoryIdAndAvailable"}, allEntries = true)
+    @CacheEvict(value = {"productAll","productByCategoryId", "productByCategoryIdAndAvailable"}, allEntries = true)
     @Override
     public ApiResultDTO<?> update(Integer id, ProductCrudDTO crudDTO) {
         Product product = updateEntity(productRepository.getById(id), crudDTO);
 
         productRepository.save(product);
 
-        return ApiResultDTO.success(product);
+        return ApiResultDTO.success(toDTO(product));
     }
 
-    @CacheEvict(value = {"productByCategoryId", "productByCategoryIdAndAvailable"}, allEntries = true)
+    @CacheEvict(value = {"productAll","productByCategoryId", "productByCategoryIdAndAvailable"}, allEntries = true)
     @Override
     public void delete(Integer id) {
         Product product = productRepository.getById(id);
@@ -85,19 +85,19 @@ public class ProductServiceImpl implements ProductService {
 
     private ProductDTO toDTO(Product product) {
         ProductDTO productDTO = new ProductDTO();
-        productDTO.setId(productDTO.getId());
+        productDTO.setId(product.getId());
         productDTO.setName(product.getName());
         productDTO.setDescription(product.getDescription());
         productDTO.setAvailable(product.isAvailable());
         productDTO.setCategoryId(product.getCategory().getId());
-        productDTO.setAttachments(product.getAttachments().stream().map(Attachment::getId).toList());
+        productDTO.setAttachmentIds(product.getAttachments().stream().map(Attachment::getId).toList());
         return productDTO;
     }
 
     private Product updateEntity(Product product, ProductCrudDTO crudDTO) {
         product.setName(crudDTO.getName());
         product.setDescription(crudDTO.getDescription());
-        product.setAvailable(product.isAvailable());
+        product.setAvailable(crudDTO.isAvailable());
 
         Category category = categoryRepository.getById(crudDTO.getCategoryId());
         product.setCategory(category);

@@ -10,4 +10,8 @@ public enum PermissionEnum {
     CATEGORY_CREATE,
     CATEGORY_UPDATE,
     CATEGORY_DELETE,
+
+    PRODUCT_CREATE,
+    PRODUCT_UPDATE,
+    PRODUCT_DELETE,
 }

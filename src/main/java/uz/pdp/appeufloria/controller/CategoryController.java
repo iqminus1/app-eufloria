@@ -18,13 +18,13 @@ import uz.pdp.appeufloria.utils.AppConstants;
 public class CategoryController {
     private final CategoryService categoryService;
 
-    @PreAuthorize("isAuthenticated()")
+//    @PreAuthorize("isAuthenticated()")
     @GetMapping("/all")
     public ResponseEntity<?> readAll() {
         return ResponseEntity.ok(categoryService.readAll());
     }
 
-    @PreAuthorize("isAuthenticated()")
+//    @PreAuthorize("isAuthenticated()")
     @GetMapping("/read/{id}")
     public ResponseEntity<?> read(@PathVariable Integer id) {
         return ResponseEntity.ok(categoryService.read(id));
