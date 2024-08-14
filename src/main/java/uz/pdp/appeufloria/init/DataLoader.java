@@ -3,6 +3,8 @@ package uz.pdp.appeufloria.init;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.data.redis.connection.RedisServerCommands;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import uz.pdp.appeufloria.entity.Permission;
@@ -25,6 +27,7 @@ public class DataLoader implements CommandLineRunner {
     private final PermissionRepository permissionRepository;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final RedisTemplate<String, Object> redisTemplate;
 
     @Value("${app.admin.username}")
     private String username;
@@ -36,9 +39,14 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
+        flushRedis();
         checkAdmin();
 
         checkUserRole();
+    }
+
+    private void flushRedis() {
+        redisTemplate.getConnectionFactory().getConnection().flushDb();
     }
 
     private void checkUserRole() {

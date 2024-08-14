@@ -14,6 +14,7 @@ import uz.pdp.appeufloria.entity.templates.AbsIntEntity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Objects;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,7 +23,7 @@ import java.util.Collection;
 @ToString
 @Entity(name = "users")
 @SQLRestriction("deleted = false")
-@SQLDelete(sql="update users set deleted = true where id = ?")
+@SQLDelete(sql = "update users set deleted = true where id = ?")
 public class User extends AbsIntEntity implements UserDetails, Serializable {
 
     private String username;
@@ -61,4 +62,16 @@ public class User extends AbsIntEntity implements UserDetails, Serializable {
         return true;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(getId(), user.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(getId());
+    }
 }
